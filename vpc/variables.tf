@@ -16,12 +16,6 @@ variable "environment" {
 # OPTIONAL VARIABLES
 # ---------------------------------------------------------------------------------------------------------------------
 
-variable "vpc_name" {
-  description = "Name for the VPC. If not provided, uses environment as prefix."
-  type        = string
-  default     = ""
-}
-
 variable "availability_zones" {
   description = "List of availability zones to use for subnets"
   type        = list(string)
@@ -40,28 +34,16 @@ variable "private_subnet_cidrs" {
   default     = ["10.0.10.0/24", "10.0.11.0/24"]
 }
 
-variable "enable_dns_hostnames" {
-  description = "Enable DNS hostnames in the VPC"
-  type        = bool
-  default     = true
-}
-
-variable "enable_dns_support" {
-  description = "Enable DNS support in the VPC"
-  type        = bool
-  default     = true
-}
-
-variable "enable_nat_gateway" {
-  description = "Enable NAT Gateway for private subnets"
-  type        = bool
-  default     = true
-}
-
 variable "project_name" {
   description = "Project name for tagging"
   type        = string
   default     = ""
+}
+
+variable "enable_nat_gateway" {
+  description = "Enable NAT Gateway for private subnets (costs money when enabled)"
+  type        = bool
+  default     = true
 }
 
 variable "tags" {

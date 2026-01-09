@@ -7,37 +7,7 @@ output "instance_id" {
   value       = aws_instance.this.id
 }
 
-output "instance_arn" {
-  description = "The ARN of the EC2 instance"
-  value       = aws_instance.this.arn
-}
-
 output "public_ip" {
-  description = "The public IP address of the instance (if assigned)"
+  description = "The public IP address of the instance"
   value       = aws_instance.this.public_ip
-}
-
-output "private_ip" {
-  description = "The private IP address of the instance"
-  value       = aws_instance.this.private_ip
-}
-
-output "public_dns" {
-  description = "The public DNS name of the instance"
-  value       = aws_instance.this.public_dns
-}
-
-output "private_dns" {
-  description = "The private DNS name of the instance"
-  value       = aws_instance.this.private_dns
-}
-
-output "availability_zone" {
-  description = "The availability zone of the instance"
-  value       = aws_instance.this.availability_zone
-}
-
-output "ami_id" {
-  description = "The AMI ID used for the instance"
-  value       = aws_instance.this.ami
 }

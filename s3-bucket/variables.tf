@@ -23,19 +23,6 @@ variable "force_destroy" {
   default     = false
 }
 
-variable "enable_encryption" {
-  description = "Enable server-side encryption"
-  type        = bool
-  default     = true
-}
-
-variable "kms_key_arn" {
-  description = "ARN of KMS key for encryption. If empty, uses AES256."
-  type        = string
-  default     = ""
-}
-
-# Public access block settings
 variable "block_public_acls" {
   description = "Block public ACLs"
   type        = bool
@@ -44,18 +31,6 @@ variable "block_public_acls" {
 
 variable "block_public_policy" {
   description = "Block public bucket policies"
-  type        = bool
-  default     = true
-}
-
-variable "ignore_public_acls" {
-  description = "Ignore public ACLs"
-  type        = bool
-  default     = true
-}
-
-variable "restrict_public_buckets" {
-  description = "Restrict public bucket policies"
   type        = bool
   default     = true
 }

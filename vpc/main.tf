@@ -4,19 +4,23 @@
 # Creates a VPC with public and private subnets, internet gateway, and NAT gateway.
 # ---------------------------------------------------------------------------------------------------------------------
 
+locals {
+  name_prefix = var.project_name != "" ? "${var.project_name}-${var.environment}" : var.environment
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # VPC
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "aws_vpc" "this" {
   cidr_block           = var.vpc_cidr
-  enable_dns_hostnames = var.enable_dns_hostnames
-  enable_dns_support   = var.enable_dns_support
+  enable_dns_hostnames = true
+  enable_dns_support   = true
 
   tags = merge(
     var.tags,
     {
-      Name        = var.vpc_name != "" ? var.vpc_name : "${var.environment}-vpc"
+      Name        = "${local.name_prefix}-vpc"
       Environment = var.environment
     }
   )
@@ -32,7 +36,7 @@ resource "aws_internet_gateway" "this" {
   tags = merge(
     var.tags,
     {
-      Name        = "${var.vpc_name != "" ? var.vpc_name : var.environment}-igw"
+      Name        = "${local.name_prefix}-igw"
       Environment = var.environment
     }
   )
@@ -53,7 +57,7 @@ resource "aws_subnet" "public" {
   tags = merge(
     var.tags,
     {
-      Name        = "${var.vpc_name != "" ? var.vpc_name : var.environment}-public-${count.index + 1}"
+      Name        = "${local.name_prefix}-public-${count.index + 1}"
       Environment = var.environment
       Tier        = "public"
     }
@@ -74,7 +78,7 @@ resource "aws_subnet" "private" {
   tags = merge(
     var.tags,
     {
-      Name        = "${var.vpc_name != "" ? var.vpc_name : var.environment}-private-${count.index + 1}"
+      Name        = "${local.name_prefix}-private-${count.index + 1}"
       Environment = var.environment
       Tier        = "private"
     }
@@ -92,7 +96,7 @@ resource "aws_eip" "nat" {
   tags = merge(
     var.tags,
     {
-      Name        = "${var.vpc_name != "" ? var.vpc_name : var.environment}-nat-eip"
+      Name        = "${local.name_prefix}-nat-eip"
       Environment = var.environment
     }
   )
@@ -113,7 +117,7 @@ resource "aws_nat_gateway" "this" {
   tags = merge(
     var.tags,
     {
-      Name        = "${var.vpc_name != "" ? var.vpc_name : var.environment}-nat"
+      Name        = "${local.name_prefix}-nat"
       Environment = var.environment
     }
   )
@@ -136,7 +140,7 @@ resource "aws_route_table" "public" {
   tags = merge(
     var.tags,
     {
-      Name        = "${var.vpc_name != "" ? var.vpc_name : var.environment}-public-rt"
+      Name        = "${local.name_prefix}-public-rt"
       Environment = var.environment
     }
   )
@@ -167,7 +171,7 @@ resource "aws_route_table" "private" {
   tags = merge(
     var.tags,
     {
-      Name        = "${var.vpc_name != "" ? var.vpc_name : var.environment}-private-rt"
+      Name        = "${local.name_prefix}-private-rt"
       Environment = var.environment
     }
   )
